@@ -1,0 +1,197 @@
+para poder agregar o poder empezar debo buscar el tcpdf, este se encuentra en la carpeta tcpdf, este se encuentra dentro de la carpeta tcpdf -> examples -> tcpdf_include.php
+este es el archivo que abre todo el tcpdf o el que se debe copiar para hacer uso de el es decir lo que se debe hacer es copiar este archivo y pergarlo donde queremos usarlo
+en la linea 27 
+require_once('tcpdf/examples/config/tcpdf_config_alt.php');
+se debe poner la ruta de donde está el archivo config
+también para que funcionse se debe poner en las lineas de tcpdf_include.php 
+
+    realpath(dirname(__FILE__) . 'tcpdf/tcpdf.php'),// True source file
+	realpath('tcpdf\tcpdf.php'),// Relative from $PWD
+esta parte se encuentra con un /../
+lo que indica que se regresa una carpeta ya que se encontraba en otra carpeta esta llamada, por lo cual se debe modificar para que este funcione
+
+    $pdf->Write($h, $txt, $link='', $fill=0, $align='', $ln=false, $stretch=0, $firstline=false, $firstblock=false, $maxh=0);
+        en esta linea :
+        $pdf->Write(0, 'este es mi texto',   '',     0,   'C',      true,         0,    false,       false,    0);
+                //  $h   $txt              $link  $fill  $aling    $ln    $stretch  $firstline  $firstblock  $maxh 
+
+            $h: Especifica la altura del espacio que ocupará el texto. Si se establece a 0, se utiliza automáticamente el valor de la altura actual de la fuente. En el contexto de una celda, $h define la altura máxima de la celda antes de que se produzca un salto de página automático.
+
+            $txt: Es el texto que se escribirá en el PDF. Puedes incluir etiquetas HTML en este texto para formatear el contenido (por ejemplo, usar <b> para texto en negrita o <br> para saltos de línea).
+
+            $link: Especifica un enlace URL o una acción para el texto. Si este parámetro está vacío, el texto no tendrá enlace.
+
+            $fill: Si se establece en 1, el fondo del texto se rellenará con el color de fondo actual. Si se establece en 0, el fondo no se rellenará.
+
+            $align: Define la alineación del texto. Puedes utilizar los siguientes valores:
+
+            'L': Alineación izquierda (por defecto).
+            'C': Alineación centrada.
+            'R': Alineación derecha.
+            'J': Justificar el texto.
+            $ln: Si se establece en true, se realizará un salto de línea después de imprimir el texto. Si se establece en false, el cursor permanecerá en la misma línea después de imprimir el texto.
+
+            $stretch: Especifica el espaciado horizontal entre los caracteres. Si se establece en 0 (valor predeterminado), se utiliza el espaciado normal.
+
+            $firstline: Si se establece en true, se aplicará una sangría en la primera línea del texto.
+
+            $firstblock: Si se establece en true, se aplicará una sangría en el primer bloque del texto.
+
+            $maxh: Especifica la altura máxima del bloque de texto antes de que se produzca un salto de página automático.
+
+            En resumen, la función Write() se utiliza para agregar texto al documento PDF y te permite controlar su formato, alineación, espaciado y otros atributos. Puedes utilizar etiquetas HTML en el texto para aplicar formato y estilos. Además, el método puede manejar automáticamente los saltos de línea y las páginas en función de los parámetros que le proporcionas.
+
+    $pdf->MultiCell($width, $height, $text, $border = 0, $align = 'L', $fill = false, $ln = 1, $x = '', $y = '', $reseth = true, $stretch = 0, $ishtml = false, $autopadding = true, $maxh = 0);
+
+        Explicación de los parámetros más relevantes:
+
+            $width: Ancho de la celda.
+            $height: Alto de la celda. Si se establece en 0, la celda tendrá una altura automática para ajustarse al contenido.
+            $text: Texto que se imprimirá en la celda.
+            $border: Establece el tipo de borde de la celda (por defecto es 0, sin borde).
+            $align: Alineación del texto dentro de la celda (
+                'L' para izquierda, 
+                'C' para centrado, 
+                'R' para derecha, 
+                'J' para justificar (por defecto) ).
+            $fill: Si se establece en true, se rellenará el fondo de la celda con el color de fondo actual.
+            $ln: Si se establece en 1, se realizará un salto de línea después de imprimir la celda.
+            $x y $y: Coordenadas X e Y donde se ubicará la celda. Si se dejan en blanco (''), se usará la posición actual del cursor.
+            $ishtml: Si se establece en true, el texto se procesará como HTML, lo que permite utilizar etiquetas HTML en el texto.
+            $autopadding: Si se establece en false, se desactivará el relleno automático de celdas, lo que puede ser útil para controlar manualmente el espaciado del contenido.
+            $maxh: Especifica la altura máxima de la celda antes de que se produzca un salto de página automático.
+        Recuerda que TCPDF es una herramienta poderosa para generar documentos PDF, y el uso de Multicell() te permitirá imprimir texto en celdas con mayor flexibilidad y control sobre el formato del contenido.
+
+    $pdf->Text($x, $y, $text);
+        Explicación de los parámetros:
+
+            $x: Coordenada X donde se ubicará el texto en el PDF.
+            $y: Coordenada Y donde se ubicará el texto en el PDF.
+            $text: Texto que se imprimirá en el PDF.
+        El método Text() es útil cuando necesitas colocar texto en una posición fija del documento y no deseas que se ajuste automáticamente. Es comúnmente utilizado para encabezados, pies de página, o para posicionar elementos de manera precisa en un diseño personalizado del PDF. Sin embargo, ten en cuenta que no ajustará el tamaño del texto ni realizará saltos de línea automáticamente.
+
+AddPage(): Agrega una nueva página al documento PDF.
+
+SetFont($family, $style, $size): Establece la fuente del texto. Puedes definir la familia de fuentes, el estilo (normal, negrita, cursiva, subrayado) y el tamaño.
+
+Cell($width, $height, $text, $border, $ln, $align, $fill, $link): Agrega una celda al documento. Es útil para imprimir texto con formato dentro de celdas específicas.
+
+MultiCell($width, $height, $text, $border, $align, $fill): Similar a Cell(), pero permite que el texto abarque varias líneas y ajusta automáticamente el tamaño de la celda.
+
+Image($file, $x, $y, $width, $height, $type, $link): Agrega una imagen al documento PDF.
+
+SetTextColor($r, $g, $b): Establece el color del texto.
+
+SetFillColor($r, $g, $b): Establece el color de relleno de celdas y figuras.
+
+SetDrawColor($r, $g, $b): Establece el color de los bordes de celdas y figuras.
+
+SetLineWidth($width): Establece el ancho de las líneas.
+
+SetMargins($left, $top, $right): Establece los márgenes del documento.
+
+SetAutoPageBreak($auto, $margin): Habilita o deshabilita el salto de página automático.
+
+Output($name, $dest): Genera el PDF y lo envía al navegador o almacena el contenido en una variable.
+
+AliasNbPages(): Define un alias para el número total de páginas.
+
+SetAutoPageBreak($auto, $margin): Habilita o deshabilita el salto de página automático y establece el margen para el salto de página.
+
+SetMargins($left, $top, $right): Establece los márgenes del documento.
+
+SetFont($family, $style, $size): Establece la fuente del texto.
+
+SetTextColor($r, $g, $b): Establece el color del texto.
+
+SetFillColor($r, $g, $b): Establece el color de relleno de celdas y figuras.
+
+SetDrawColor($r, $g, $b): Establece el color de los bordes de celdas y figuras.
+
+SetLineWidth($width): Establece el ancho de las líneas.
+
+SetXY($x, $y): Establece la posición actual del cursor.
+
+Cell($width, $height, $text, $border, $ln, $align, $fill, $link): Agrega una celda al documento.
+
+MultiCell($width, $height, $text, $border, $align, $fill): Agrega una celda que puede contener múltiples líneas de texto.
+
+Image($file, $x, $y, $width, $height, $type, $link): Agrega una imagen al documento PDF.
+
+Text($x, $y, $text): Imprime texto en una posición específica del PDF.
+
+SetHeaderData($ln='', $lw=0, $ht='', $hs='', $tc=array(0,0,0), $lc=array(0,0,0)): Establece los datos de la cabecera.
+
+SetFooterData($tc=array(0,0,0), $lc=array(0,0,0)): Establece los datos del pie de página.
+
+Write($h, $txt, $link='', $fill=0, $align='', $ln=false, $stretch=0, $firstline=false, $firstblock=false, $maxh=0): Escribe texto con formato.
+
+WriteHTML($html, $ln=true, $fill=false, $reseth=true, $cell=false, $align=''): Escribe texto con formato HTML.
+
+Output($name='', $dest=''): Genera el PDF y lo envía al navegador o almacena el contenido en una variable.
+
+AddFont($family, $style='', $file='', $uni=false): Agrega una nueva fuente personalizada al documento.
+
+SetFontSubsetting($isubsetting): Activa o desactiva la subconjunto de fuentes (embed fonts).
+
+SetFontSize($size): Establece el tamaño de fuente actual.
+
+SetTextColor($r, $g, $b): Establece el color del texto.
+
+SetDrawColor($r, $g, $b): Establece el color del borde de celdas y figuras.
+
+SetFillColor($r, $g, $b): Establece el color de relleno de celdas y figuras.
+
+SetLineStyle($width, $cap='round', $join='round', $dash='', $color=0): Establece el estilo de línea.
+
+SetCellPadding($value): Establece el valor de relleno de celda.
+
+SetCellMargins($left, $top, $right, $bottom): Establece los márgenes internos de la celda.
+
+SetLink($x, $y, $link): Establece un enlace en una posición y área específicas.
+
+SetTextColorArray($color): Establece el color del texto a través de un array RGB.
+
+SetFillColorArray($color): Establece el color de relleno a través de un array RGB.
+
+SetDrawColorArray($color): Establece el color del borde a través de un array RGB.
+
+SetLineWidth($width): Establece el ancho de línea.
+
+Rotate($angle, $x=-1, $y=-1): Rota el texto en un ángulo específico.
+
+SetWordSpacing($spacing): Establece el espacio entre palabras.
+
+SetCharacterSpacing($spacing): Establece el espacio entre caracteres.
+
+SetHeaderFont($family, $style='', $size=''): Establece la fuente para el encabezado.
+
+SetFooterFont($family, $style='', $size=''): Establece la fuente para el pie de página.
+
+SetLink(): Establece un enlace interno a una posición específica del documento.
+
+AddPage(): Agrega una nueva página al documento PDF.
+
+Cell(): Agrega una celda al documento.
+
+CheckPageBreak(): Verifica si es necesario hacer un salto de página.
+
+Close(): Termina el documento PDF y cierra el flujo de salida.
+
+Error(): Imprime un mensaje de error y termina la ejecución.
+
+Footer(): Especifica el contenido del pie de página.
+
+Header(): Especifica el contenido de la cabecera.
+
+Image(): Agrega una imagen al documento PDF.
+
+Line(): Dibuja una línea en el documento.
+
+Ln(): Realiza un salto de línea.
+
+MultiCell(): Agrega una celda que puede contener múltiples líneas de texto.
+
+Open(): Inicializa el documento PDF y crea una nueva página.
+
+Rect(): Dibuja un rectángulo.
