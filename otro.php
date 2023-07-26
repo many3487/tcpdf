@@ -67,15 +67,11 @@ $pdf->SetFont('dejavusans', '', 14, '', true);
 $pdf->AddPage();
 
 
-$image_path = __DIR__ . '/fondo.png';
-if (file_exists($image_path)) {
-    $pageWidth = $pdf->getPageWidth(); // Obtén el ancho de la página
-    $pageHeight = $pdf->getPageHeight(); // Obtén la altura de la página    
-    $pdf->Image($image_path, 0, 0, $pageWidth, $pageHeight, 'PNG', '', 'C', false, 500, '', false, false, 0, false, false, false);
-}
+
 // set text shadow effect
 $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'color'=>array(196,196,196), 'opacity'=>1, 'blend_mode'=>'Normal'));
-
+$pdf->SetFillColor(0, 128, 0);
+$pdf->Rect(70, 80, 30, 60, 'F');
 // Set some content to print
 $html = <<<EOD
 <i>This is the first example of TCPDF library.</i>
@@ -90,7 +86,10 @@ $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 $pdf->Write(0, 'este es mi texto para tcpdf aqui se está realizando una prueba para poder verificar que tanto  texto puede caber en este pdf por lo cual solo es una prueba... write', '', 0,'L', true, 0, false, false, 0);
 $hola = 'este es un texto de prueba';
 // ---------------------------------------------------------
+
 $pdf->Multicell(150,0,$hola,0,'L', false,'1',100,0,false,false);
+
+$pdf->Rect(150, 60, 30, 60, 'F', null, [0, 128, 0], null, 0, [0.6], 1);
 
 
 // Close and output PDF document

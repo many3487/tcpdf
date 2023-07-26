@@ -195,3 +195,85 @@ MultiCell(): Agrega una celda que puede contener múltiples líneas de texto.
 Open(): Inicializa el documento PDF y crea una nueva página.
 
 Rect(): Dibuja un rectángulo.
+
+    $pdf->Image($file, $x = '', $y = '', $w = 0, $h = 0, $type = '', $link = '', $align = '', $resize = false, $dpi = 300, $palign = '', $ismask = false, $imgmask = false, $border = 0, $fitbox = false, $hidden = false, $fitonpage = false);
+A continuación, se describen algunos de los parámetros más importantes del método $pdf->Image():
+
+    $file: Ruta de la imagen en el servidor local o URL de la imagen remota.
+    $x: Coordenada X de la esquina superior izquierda donde se colocará la imagen (por defecto, se coloca en la posición actual de la celda).
+    $y: Coordenada Y de la esquina superior izquierda donde se colocará la imagen (por defecto, se coloca en la posición actual de la celda).
+    $w: Ancho de la imagen en el PDF. Si se establece en 0, el ancho se ajustará automáticamente manteniendo la relación de aspecto.
+    $h: Altura de la imagen en el PDF. Si se establece en 0, la altura se ajustará automáticamente manteniendo la relación de aspecto.
+    $type: Formato de la imagen. TCPDF intentará determinar el formato automáticamente si este parámetro se deja en blanco.
+    $link: URL al que se enlazará la imagen cuando se haga clic (opcional).
+    $align: Alineación de la imagen. Puede ser 'L' (izquierda), 'C' (centro) o 'R' (derecha).
+    $resize: Si se establece en true, TCPDF redimensionará automáticamente la imagen para que encaje en el área designada por $w y $h.
+    $dpi: Resolución de la imagen en puntos por pulgada (por defecto, 300 DPI).
+    $border: Grosor del borde de la imagen (por defecto, 0).
+    $fitbox: Si se establece en true, la imagen se ajustará a la caja definida por $w y $h (si están definidos).
+    $fitonpage: Si se establece en true, la imagen se ajustará al tamaño de la página si es más grande que la página.
+
+
+$pdf->Rect(70, 60, 30, 60, 'F', null, [0, 128, 0], null, 0, [0.6], 1);
+    Image(
+    $file, // Ruta del archivo de imagen
+    $x,    // Posición X de la imagen en el PDF
+    $y,    // Posición Y de la imagen en el PDF
+    $w,    // Ancho de la imagen en el PDF
+    $h,    // Altura de la imagen en el PDF
+    $type, // Tipo de imagen ('JPEG', 'PNG', etc.)
+    $link, // URL a la que se redirige al hacer clic en la imagen (opcional)
+    $align, // Alineación de la imagen ('L', 'C', 'R', 'T', 'M', 'B', etc.)
+    $resize, // Redimensionar la imagen para ajustarse al tamaño especificado (opcional)
+    $dpi,    // Resolución de la imagen (puntos por pulgada)
+    $palign, // Alineación del enlace (opcional)
+    $ismask, // Establecer como máscara (opcional)
+    $imgmask, // Máscara (opcional)
+    $border, // Borde de la imagen (opcional)
+    $fitbox, // Ajustar tamaño de la caja (opcional)
+    $hidden, // Imagen oculta (opcional)
+    $fitonpage, // Ajustar a la página (opcional)
+    $alt // Texto alternativo (opcional)
+)
+
+$spotcolorname: Es el nombre del color directo que deseas agregar. Debes usar un nombre único para el color.
+    $c: Canal de cian (C) del color directo (valor entre 0 y 100).
+    $m: Canal de magenta (M) del color directo (valor entre 0 y 100).
+    $y: Canal de amarillo (Y) del color directo (valor entre 0 y 100).
+    $k: Canal de negro (K) del color directo (valor entre 0 y 100).
+    este se usa con Rect()
+
+
+Rect(float $x, float $y, float $w, float $h, string $style = '', mixed $border_style = null, array $fill_color = null, mixed $border_color = null, float $line_width = 0.2, array $fill_opacity = null, float $border_opacity = 1.0, string $blend_mode = 'Normal', bool $invert = false);
+    $x: Coordenada X del punto superior izquierdo del rectángulo.
+    $y: Coordenada Y del punto superior izquierdo del rectángulo.
+    $w: Ancho del rectángulo.
+    $h: Altura del rectángulo.
+    $style: Opcional. Estilo del rectángulo (por ejemplo, "DF", "F", "D", "S", etc.). Puedes combinar varios estilos separándolos por comas. Si está vacío o es null, el rectángulo no tendrá estilo.
+    $border_style: Opcional. Estilo del borde del rectángulo (por ejemplo, "D", "S", etc.). Puedes combinar varios estilos separándolos por comas. Si es null, el borde será recto. Si está vacío o es null, no se dibujará el borde.
+    $fill_color: Opcional. Color de relleno del rectángulo. Puede ser un arreglo de valores RGB [R, G, B] o un color directo como 'R', 'G', 'B' o 'C'. Si está vacío o es null, no habrá relleno.
+    $border_color: Opcional. Color del borde del rectángulo. Puede ser un arreglo de valores RGB [R, G, B] o un color directo como 'R', 'G', 'B' o 'C'. Si está vacío o es null, el color del borde será negro.
+    $line_width: Opcional. Grosor de línea del borde del rectángulo.
+    $fill_opacity: Opcional. Opacidad del relleno del rectángulo. Un valor entre 0 (transparente) y 1 (opaco).
+    $border_opacity: Opcional. Opacidad del borde del rectángulo. Un valor entre 0 (transparente) y 1 (opaco).
+    $blend_mode: Opcional. Modo de mezcla del rectángulo.
+    $invert: Opcional. Si es true, el rectángulo se dibujará en sentido inverso (por ejemplo, el relleno se convierte en borde y viceversa).
+Ejemplo de uso:
+
+php
+Copy code
+// Dibujar un rectángulo con borde y relleno
+$pdf->Rect(50, 50, 100, 50, 'DF', 'D', [255, 0, 0], [0, 0, 255], 0.5, [0.8], 0.9);
+
+// Dibujar un rectángulo solo con borde
+$pdf->Rect(150, 100, 50, 30, 'D', 'D', null, [0, 0, 0], 1);
+
+// Dibujar un rectángulo solo con relleno
+$pdf->Rect(50, 150, 80, 40, 'F', null, [0, 128, 0], null, 0, [0.6], 1);
+
+// Dibujar un rectángulo sin borde ni relleno
+$pdf->Rect(150, 150, 60, 20);
+
+*****************************************************************************************
+se debe tener en cuenta que tcpdf si quiero que la imagen quede detras de la letra, se debe declarar primero,, ya que si esta es puesta 
+*****************************************************************************************
